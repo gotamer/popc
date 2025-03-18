@@ -1,4 +1,4 @@
-module go.hansaray.pw/pop3
+module go.hansaray.pw/popc
 
 go 1.23.6
 
