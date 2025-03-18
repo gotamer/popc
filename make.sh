@@ -30,7 +30,7 @@ echo "[INF] LDFLAGS: ${LDFLAGS[*]}\n"
 
 echo "[INF] setting build env"
 go env -w CGO_ENABLED=0
-go env -w GO111MODULE=1
+go env -w GO111MODULE=on
 
 # Just edit Title, Description, and Tags
 metadata() {
