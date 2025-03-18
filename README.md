@@ -1,29 +1,56 @@
-# NixMail POP3 command line client
+NixMail POP3 Command Line Client
+================================
 
-## DESCRIPTION
-The POP3 (Post Office Protocol Version 3) is an application-layer Internet standard protocol used by local Email clients to retrieve Email from a remote server over a TCP/IP connection.
+popc --help
+-----------
+```
+popc - NixMail POP3 Command Line Client
+
+DESCRIPTION
+The POP3 (Post Office Protocol Version 3) is an application-layer Internet standard protocol used by local Email clients to retrieve eMail from a remote server over a TCP/IP connection.
 
 The NixMail POP3 client is a simple, stand alone tool to retrieve email from a server using the command line or possibly automate the download via a scheduled cron job. The client can be used independent from the rest of the NixMail system.
 
-Following enviroment variables must be set:
-(example shown is for the fish shell)
+SYNOPSIS
+	popc [OPTIONS]
 
-	set -gx POP3_HOSTNAME "mail.example.net:995"
-	set -gx POP3_USERNAME "alias@example.net"
-	set -gx POP3_USERPASS "pop3 password"
-	set -gx POP3_FILEPATH "/var/mail/quene"
+OPTIONS
+	-c, --config [string]
+		Custom config file path
 
---------------------------------------------------------------------------------
+	-a, --pop3-alias [string]
+		Pop3 account to use from config file
 
-	pop3 [OPTIONS]
+	--reset  [bool] 
+		Send pop3 Rset, which will unmark any messages that have being marked for deletion in the current session
 
-	The following options are available:
+	--pipe [bool]
+		Pipe out mail, rather then saving to mail quene
 
-	-h or --help
-	       Print this help and exit.
+ 	--print-config
+		Print POP3 configuration, and exit
 
-	-v or --version
-	       Print version and exit.
+	--default-config-path [bool]
+		Print the default config path, and exit
+
+	-h, --help [bool]
+		Report usage information and exit
+
+	-v, --version [bool]
+		Print version tag and exit
+
+	-d, --debug [bool]
+		Print debug information about the process
+
+	--verbose [bool]
+		Print extra verbose debug information about the process
+
+REPORTING BUGS
+	npub12jjczvd2mzstyhr468fyas7vzmsm5d2x3tv5l9tev6q0jakk9djqx4uk7x
+
+COPYRIGHT
+	© 2025 MIT
+```
 
 --------------------------------------------------------------------------------
 ## Note:
