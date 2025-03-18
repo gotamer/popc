@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path"
 
@@ -10,7 +11,7 @@ import (
 )
 
 const (
-	APPNAME = "NixMail pop3 client"
+	APPNAME = "NixMail POP3 Client"
 )
 
 var (
@@ -23,15 +24,20 @@ var (
 
 func init() {
 	flags()
-
+	UserConfigPath()
+	loadConfig()
 }
 
 func main() {
+	if viewcfg {
+		fmt.Printf("host: %s, user: %s, pass: %s, File: %s", Hostname, Username, Password, Filepath)
+		os.Exit(0)
+	}
 	var err error
 	if c, err = pop3.DialTLS(Hostname); err != nil {
 		log.F("DialTLS: %s", err.Error())
 	}
-	defer c.Quit()
+	defer Quit(c)
 	if err = c.Authorization(Username, Password); err != nil {
 		log.F("AUTH: %s", err.Error())
 	}
@@ -50,22 +56,35 @@ func main() {
 			log.D("id: %d UID: %s Size: %d", v.ID, v.UID, v.Size)
 			message, err := c.RetrRaw(v.ID)
 			if err != nil {
+				popRset = true
 				log.F("Message ID: %v ERR: %s", v.ID, err.Error())
 			}
-			var filename string
-			if v.UID == "" {
-				filename = random.String(10, 10, false)
+			if pipe {
+				if _, err := fmt.Fprint(os.Stdout, string(message)); err != nil {
+					popRset = true
+					log.F(err.Error())
+				}
 			} else {
-				filename = v.UID
-			}
-			file := path.Join(Filepath, filename)
-			log.D("File: %s", v.ID, v.UID, v.Size)
-			err = os.WriteFile(file, message, 0640)
-			if err != nil {
-				log.F("Write Message ID: %v ERR: %s", v.ID, err.Error())
+				var filename string
+				if v.UID == "" {
+					filename = random.String(10, 10, false)
+				} else {
+					filename = v.UID
+				}
+				file := path.Join(Filepath, filename)
+				log.D("File: %s", v.ID, v.UID, v.Size)
+				err = os.WriteFile(file, message, 0640)
+				if err != nil {
+					popRset = true
+					log.F("Write Message ID: %v ERR: %s", v.ID, err.Error())
+				}
 			}
 		}
 	}
+}
+
+func Quit(c *pop3.Client) {
+	var err error
 	if popRset {
 		if err = c.Rset(); err != nil {
 			log.E("Rset: %s", err.Error())

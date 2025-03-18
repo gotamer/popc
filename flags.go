@@ -16,6 +16,8 @@ var (
 
 var (
 	popRset bool
+	pipe    bool
+	viewcfg bool
 )
 
 func flags() {
@@ -35,7 +37,7 @@ func flags() {
 			}
 			continue
 
-		case "--pop3-alias":
+		case "-a", "--pop3-alias":
 			if mustNext(no) {
 				pop3Alias = getNext(no)
 			}
@@ -46,8 +48,16 @@ func flags() {
 			popRset = true
 			continue
 
+		case "--pipe":
+			pipe = true
+			continue
+
+		case "--print-config":
+			viewcfg = true
+			continue
+
 		case "--config-template":
-			log.Info("Not yet implemented")
+			log.I("Not yet implemented")
 			os.Exit(0)
 
 		case "--default-config-path":
@@ -108,26 +118,32 @@ OPTIONS
 	-c, --config [string]
 		Custom config file path
 
-	--pop3-alias [string]
-		Pop3 account to use from config file.
+	-a, --pop3-alias [string]
+		Pop3 account to use from config file
 
 	--reset  [bool] 
-		Send pop3 Rset, which will unmark any messages that have being marked for deletion in the current session.
+		Send pop3 Rset, which will unmark any messages that have being marked for deletion in the current session
+
+	--pipe [bool]
+		Pipe out mail, rather then saving to mail quene
+
+ 	--print-config
+		Print POP3 configuration, and exit
 
 	--default-config-path [bool]
-		Will print the default config path, and exit.
+		Print the default config path, and exit
 
 	-h, --help [bool]
-		Report usage information and exit.
+		Report usage information and exit
 
 	-v, --version [bool]
-		Print version tag and exit.
+		Print version tag and exit
 
 	-d, --debug [bool]
-		Print debug information about the process.
+		Print debug information about the process
 
 	--verbose [bool]
-		Print extra verbose debug information about the process.
+		Print extra verbose debug information about the process
 
 REPORTING BUGS
 	npub12jjczvd2mzstyhr468fyas7vzmsm5d2x3tv5l9tev6q0jakk9djqx4uk7x

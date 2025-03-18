@@ -23,13 +23,14 @@ type Credentials struct {
 	Hostname string
 	Username string
 	Password string
+	Filepath string
 }
 
-func (u *User) loadConfig() {
+func loadConfig() {
 	if len(pop3Alias) == 0 {
 		pop3Alias = "default"
 	}
-	if err := toml.DecodeFile(configFilePath, &Accounts); err != nil {
+	if _, err := toml.DecodeFile(configFilePath, &Accounts); err != nil {
 		log.F("Config file: %s", err.Error())
 	}
 
@@ -40,6 +41,9 @@ func (u *User) loadConfig() {
 				Hostname = account.Hostname
 				Username = account.Username
 				Password = account.Password
+				if len(account.Filepath) != 0 {
+					Filepath = account.Filepath
+				}
 			} else {
 				log.F("Could not load pop3 account Password")
 			}
