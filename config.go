@@ -6,7 +6,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"go.hansaray.pw/lib/host"
-	"go.hansaray.pw/lib/log"
+	log "go.hansaray.pw/lib/logger"
 )
 
 const configFileName = "pop3.toml"

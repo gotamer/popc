@@ -1,0 +1,4 @@
+github.com/BurntSushi/toml v1.4.0 h1:kuoIxZQy2WRRk1pttg9asf+WVv6tWQuBNVmK8+nqPr0=
+github.com/BurntSushi/toml v1.4.0/go.mod h1:ukJfTF/6rtPPRCnwkur4qwRxa8vTRFBF0uk2lLoLwho=
+go.hansaray.pw/lib v0.0.2 h1:U2CFnriboyw8HkNvk2GOrPd0Uzxl1xJAY2k3LaUCtZg=
+go.hansaray.pw/lib v0.0.2/go.mod h1:50+O3y5dgHcQwlMLpC3B86H9jBdzwfh2bvSWuH32fhg=

@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"go.hansaray.pw/lib/log"
+	log "go.hansaray.pw/lib/logger"
 	"go.hansaray.pw/lib/version"
 )
 
