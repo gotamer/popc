@@ -9,7 +9,7 @@ PACKAGE="go.hansaray.pw/${APPNAME}"
 cd $( dirname -- "$0"; );
 ROOTDIR=$PWD;
 
-VERSION="$(git describe --tags --always --abbrev=0 --match='v[0-9]*.[0-9]*.[0-9]*' 2> /dev/null | sed 's/^.//')"
+VERSION="$(git describe --tags --always --abbrev=0 --match='v[0-9]*.[0-9]*.[0-9]*')"
 COMMIT_HASH="$(git rev-parse --short HEAD)"
 BUILD_TIME=$(date '+%Y-%m-%dT%H:%M:%S')
 BUILD_USER=$(id -u -n)
@@ -58,7 +58,11 @@ build() {
 	echo "[INF] make & install ${APPNAME}"
 	fmt
 	echo "[INF] Building"
-	go build -o="bin/${APPNAME}" -ldflags="${LDFLAGS[*]}" 
+
+	if [ ! -d "$GOBIN" ]; then
+		GOBIN="${ROOTDIR}/bin"
+	fi
+	go build -o="${GOBIN}" -ldflags="${LDFLAGS[*]}" 
 	wait
 }
 
